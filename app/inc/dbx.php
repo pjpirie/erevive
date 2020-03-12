@@ -2,7 +2,8 @@
     // function safeInput(){
     //     // return htmlspecialchars()
     // }
-    error_reporting(-1);
+    
+error_reporting(E_ERROR | E_WARNING | E_PARSE);
 class Database{
     public $host;
     public $dbname;
@@ -65,7 +66,10 @@ class Database{
         $this->stmt->execute($data);
     }
 };
-$dbx = new Database('localhost','block5_erevive','root','root');
+// Macbook Login Details
+// $dbx = new Database('localhost','block5_erevive','root','root');
+// PC Login Details
+$dbx = new Database('localhost','block5_erevive','root','');
 
 // var_dump($dbx->select("SELECT * FROM user"));
 // echo("DBX");

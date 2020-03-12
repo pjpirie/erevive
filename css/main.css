@@ -1,5 +1,22 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+/* Overwrite */
+.nav-link {
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+/* END Overwrite */
+.market {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 500px));
+    padding: 0 2rem;
+}
+
+.market__item {
+    margin: 2em;
 }

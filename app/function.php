@@ -1,7 +1,8 @@
 <?php
 require_once("inc/session.php");
 require_once("inc/dbx.php");
-error_reporting(-1);
+
+error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
 function loadStyles(){
     $styles = 
@@ -129,7 +130,21 @@ function emailExist($dbx, string $targetEmail){
 function passwordMatch(string $pwd_x, string $pwd_y){
     return $pwd_x == $pwd_y ? true : false;
 }
-
+function getProducts($dbx){
+    $prods = $dbx->select("SELECT * FROM products");
+    foreach($prods as $prod){
+    ?>
+    <div class="card market__item">
+        <img src="https://via.placeholder.com/150C/O https://placeholder.com/" class="card-img-top" style="padding: 2rem;"alt="...">
+        <div class="card-body" style="border: 1px solid #ccc">
+            <h5 class="card-title"><?= $prod['name']?></h5>
+            <p class="card-text"><?= $prod['description']?></p>
+            <a href="<?= getURL('market', ['user' => $prod['user_id']]) ?>" class="btn btn-primary">View Items</a>
+        </div>
+    </div>
+    <?php
+    }
+}
 
 // echo("FUNC");
 // var_dump(emailExist("paul@paul.com"));
