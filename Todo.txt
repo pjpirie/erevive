@@ -1,0 +1,50 @@
+Todo
+
+-- Functions File   
+    -x- Routing Library Created
+    -x- User Based Functions Created
+    -- Function to Calulate Product Age
+
+-- Database Setup
+    -x- Connection Library
+    -x- User Table Created
+    -x- Products Table Created
+    -x- Roles Table Created
+
+-X- Login System
+    -x- Forms Setup
+    -x- Sessions Setup
+    -x- Password Hashing
+    -x- Database Integration
+    -x- Login Logic
+
+-- Layout
+    -x- Proper Page Loading (Header, Content, Footer)
+    -x- Bootstrap Setup
+    -x- Navbar Created with Login Functionality
+    -x- Market Data Driven Responsive Styles
+    -- Products Display All Information On Record
+
+-- Content
+    -- Seller Information Page With Sellers Other Items
+    -- Store User Keyword Search
+    -- Registered User Adding Items
+    -- Registered User Edit Thier Items
+    -- Registered User Delete Thier Items
+    -- Admin User Adding Items
+    -- Admin User Edit Items
+    -- Admin User Delete Items
+
+-- Search Facility
+    -- Search Based On Category
+    -- Search Based On Brand
+    -- Search Based On Product Age
+
+-- Security
+    -- Auto Logout After Time Period
+    -- SQL Injection Protection
+
+-- Validation
+    -- Website Pass W3C HTML Validator
+    -- Website Pass Jigsaw CSS Validator
+    -- Website Pass Relevant PHP Validator

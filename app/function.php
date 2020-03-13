@@ -130,19 +130,48 @@ function emailExist($dbx, string $targetEmail){
 function passwordMatch(string $pwd_x, string $pwd_y){
     return $pwd_x == $pwd_y ? true : false;
 }
+function getAge($dbx ,$date){
+    $a = $dbx->select("SELECT CURRENT_TIMESTAMP AS 'Time'");
+    $b = array_pop($dbx->select("SELECT TIMEDIFF(? , ?)",[ $a[0]['Time'],$date])[0]);
+    $units = explode(':',$b);
+    // var_dump($units);
+    // exit;
+    // $time_diff = [
+    //     'hours' => $units[0],
+    //     'minutes' => $units[1],
+    //     'seconds' => $units[2]
+    // ];
+    if(intval($units[0]) > 0){
+        return intval($units[0]) . "h";
+    }elseif(intval($units[1]) > 0){
+        return intval($units[1]) . "m";
+    }elseif(intval($units[2]) > 0){
+        return intval($units[2]) . "s";
+    }
+}
 function getProducts($dbx){
-    $prods = $dbx->select("SELECT * FROM products");
-    foreach($prods as $prod){
-    ?>
-    <div class="card market__item">
-        <img src="https://via.placeholder.com/150C/O https://placeholder.com/" class="card-img-top" style="padding: 2rem;"alt="...">
-        <div class="card-body" style="border: 1px solid #ccc">
-            <h5 class="card-title"><?= $prod['name']?></h5>
-            <p class="card-text"><?= $prod['description']?></p>
-            <a href="<?= getURL('market', ['user' => $prod['user_id']]) ?>" class="btn btn-primary">View Items</a>
-        </div>
-    </div>
-    <?php
+    $prods = $dbx->select("SELECT * FROM products INNER JOIN category on products.category_id = category.id");
+    if(empty($prods)){
+        ?>
+            <div class="card market__item--none">
+                <h1>No Products... D:</h1>
+            </div>
+            <?php
+    }else{
+        foreach($prods as $prod){
+            ?>
+            <div class="card market__item">
+                <img src="<?php empty($prod['image_url']) ? $prod['image_url'] : 'https://via.placeholder.com/150C/O https://placeholder.com/'; ?> class="card-img-top" style="padding: 2rem;"alt="...">
+                <div class="card-body" style="border: 1px solid #ccc">
+                    <h5 class="card-title"><?= $prod['name']?></h5>
+                    <p class="card-text"><?= $prod['category_name']?></p>
+                    <p class="card-text"><?= $prod['description']?></p>
+                    <p class="card-text"><?= getAge($dbx,$prod['date_added']) ?></p>
+                    <a href="<?= getURL('market', ['user' => $prod['user_id']]) ?>" class="btn btn-primary">View Items</a>
+                </div>
+            </div>
+            <?php
+        }
     }
 }
 
