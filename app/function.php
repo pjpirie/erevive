@@ -149,8 +149,12 @@ function getAge($dbx ,$date){
         return intval($units[2]) . "s";
     }
 }
-function getProducts($dbx){
-    $prods = $dbx->select("SELECT * FROM products INNER JOIN category on products.category_id = category.id");
+function getProducts($dbx, $user_id = null){
+    if($user_id != null){
+        $prods = $dbx->select("SELECT * FROM products INNER JOIN category on products.category_id = category.id WHERE user_id = ?",[$user_id]);
+    }else{
+        $prods = $dbx->select("SELECT * FROM products INNER JOIN category on products.category_id = category.id");
+    }
     if(empty($prods)){
         ?>
             <div class="card market__item--none">
@@ -161,7 +165,14 @@ function getProducts($dbx){
         foreach($prods as $prod){
             ?>
             <div class="card market__item">
-                <img src="<?php empty($prod['image_url']) ? $prod['image_url'] : 'https://via.placeholder.com/150C/O https://placeholder.com/'; ?> class="card-img-top" style="padding: 2rem;"alt="...">
+                <img src="
+                <?php  
+                if($prod['image_url'] != ""){
+                    echo($prod['image_url']);
+                }else{
+                    echo('https://via.placeholder.com/150C/O https://placeholder.com/'); 
+                }
+                ?>" class="card-img-top img-fit" style="padding: 2rem;"alt="...">
                 <div class="card-body" style="border: 1px solid #ccc">
                     <h5 class="card-title"><?= $prod['name']?></h5>
                     <p class="card-text"><?= $prod['category_name']?></p>

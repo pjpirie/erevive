@@ -6,7 +6,13 @@ require_once("layout/header.php");
 ?>
 
 <div class="market">
-    <?= getProducts($dbx) ?>
+    <?php
+    if(isset($_GET['user'])){
+        echo(getProducts($dbx, $_GET['user']));
+    }else{
+        echo(getProducts($dbx));
+    }
+    ?>
 </div>
 
 

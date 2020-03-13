@@ -67,9 +67,9 @@ class Database{
     }
 };
 // Macbook Login Details
-// $dbx = new Database('localhost','block5_erevive','root','root');
+$dbx = new Database('localhost','block5_erevive','root','root');
 // PC Login Details
-$dbx = new Database('localhost','block5_erevive','root','');
+// $dbx = new Database('localhost','block5_erevive','root','');
 
 // var_dump($dbx->select("SELECT * FROM user"));
 // echo("DBX");
