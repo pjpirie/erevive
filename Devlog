@@ -1,0 +1,17 @@
+Issue #1
+
+Problem  : conditional html when form error not working
+Reason   : was checking the wrong $_GET variable
+Solution : changed $_GET variable to 'error'
+
+Issue #2
+
+Problem  : email check function not returning int of how many records exist with target email
+Reason   : i was using the 'select' function of my database class when i should have been using 'count'
+Solution : Use 'count' instead of 'select'
+
+Issue #3
+
+Problem  : password dont need to match for the password checking function to return true
+Reason   : i passed the same variable twice to the function by mistake
+Solution : change the second variable to the correct password variable

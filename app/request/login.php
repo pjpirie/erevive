@@ -18,9 +18,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             // exit;
             redirect('index');
         }else{
-            exit;
             redirect("login", [
-                'error' => 'wrongpass'
+                'error' => 'wrongpass',
+                'mail' => $email
             ]);
         }
     }else{

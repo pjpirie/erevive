@@ -122,9 +122,16 @@ function redirect(string $location, array $param = []){
     // return "Location: {$path_location}";
 }
 
+function debug($a){
+    echo '<pre>';
+    var_dump($a);
+    echo '</pre>';
+    exit;
+}
 function emailExist($dbx, string $targetEmail){
     //  return ($dbx->count("SELECT * FROM user WHERE email = ?",[$targetEmail])) > 0 ? true : false;
-    return $dbx->select("SELECT * FROM user WHERE email = ?",[$targetEmail]);
+    // debug($dbx->count("SELECT * FROM user WHERE email = ?",[$targetEmail]));
+    return $dbx->count("SELECT * FROM user WHERE email = ?",[$targetEmail]);
 }
 
 function passwordMatch(string $pwd_x, string $pwd_y){

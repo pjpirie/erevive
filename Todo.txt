@@ -3,7 +3,7 @@ Todo
 -- Functions File   
     -x- Routing Library Created
     -x- User Based Functions Created
-    -- Function to Calulate Product Age
+    -x- Function to Calulate Product Age
 
 -- Database Setup
     -x- Connection Library

@@ -13,10 +13,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $pwdY = $_POST['passwordrepeat'];
     // echo(emailExist($dbx, "SELECT * FROM user"));
     // exit;
-    if(emailExist($dbx, $email) > 0){
+    if(emailExist($dbx, $email) == 0){
         // exit;
         // echo(passwordMatch($pwdX, $pwdY));
-        if(passwordMatch($pwdX, $pwdX)){
+        if(passwordMatch($pwdX, $pwdY)){
             // exit;
             $hashed_pwd = password_hash($pwdX, PASSWORD_BCRYPT);
             $dbx->insert("INSERT INTO user (first_name, last_name, email, password) VALUES (?,?,?,?)",[$fname,$lname,$email,$hashed_pwd]);
@@ -27,17 +27,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             $_SESSION['user']['name'] = $user['0']['first_name'] . " " . $user['0']['last_name'];
             redirect('index');
         }else{
-            redirect("index", [
+            redirect("signup", [
                 'error' => 'wrongpass'
             ]);
         }
     }else{
-        redirect("index", [
+        redirect("signup", [
             'error' => 'mailused'
         ]);
     }
 }else{
-    redirect("index", [
+    redirect("signup", [
         'error' => 'noform'
     ]);
 }
