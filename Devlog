@@ -15,3 +15,15 @@ Issue #3
 Problem  : password dont need to match for the password checking function to return true
 Reason   : i passed the same variable twice to the function by mistake
 Solution : change the second variable to the correct password variable
+
+Issue #4
+
+Problem  : Item Links have the wrong item id assigned
+Reason   : sql inner join overwriting id value for the product
+Solution : adjust sql statement
+
+Issue #5
+
+Problem  : input sanitization wasnt working
+Reason   : using wrong anitise function
+Solution : changed function to htmlspecialchars()

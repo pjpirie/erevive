@@ -13,23 +13,29 @@
 /* END Overwrite */
 .market {
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+	grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+	/* grid-template-columns: 100%; */
+	grid-template-rows: minmax(250px, 1fr);
 	padding: 2em 2rem 0 2em;
 }
+
 /* SELECT DATEDIFF(hour , ? , CURRENT_TIMESTAMP) */
 .market__item {
 	margin: 2em;
-	max-width: 500px;
+	width: 500px;
+	margin: 1em auto;
 }
 
 .market__item--none {
 	grid-column: 1/-1;
 	text-align: center;
 }
+
 .img-fit {
 	object-fit: cover;
 	width: 100%;
 	height: 30vw;
 }
+
 /* return $dbx->select("SELECT TIMEDIFF(? , ?)",[ $time[0]['Time'],$date]); */
 /* <p class="card-text">Added<?= array_pop(getAge($dbx,$prod['date_added'])[0]) ?></p> */

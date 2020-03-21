@@ -17,32 +17,33 @@ Todo
     -x- Password Hashing
     -x- Database Integration
     -x- Login Logic
+    -x- Make Testing Account - Email : steven@cogc.com, Pass: pass
 
 -- Layout
     -x- Proper Page Loading (Header, Content, Footer)
     -x- Bootstrap Setup
     -x- Navbar Created with Login Functionality
     -x- Market Data Driven Responsive Styles
-    -- Products Display All Information On Record
+    -x- Products Display All Information On Record
 
 -- Content
     -- Seller Information Page With Sellers Other Items
     -- Store User Keyword Search
-    -- Registered User Adding Items
-    -- Registered User Edit Thier Items
-    -- Registered User Delete Thier Items
-    -- Admin User Adding Items
-    -- Admin User Edit Items
-    -- Admin User Delete Items
+    -x- Registered User Adding Items
+    -x- Registered User Edit Thier Items
+    -x- Registered User Delete Thier Items
+    -x- Admin User Adding Items
+    -x- Admin User Edit Items
+    -x- Admin User Delete Items
 
 -- Search Facility
-    -- Search Based On Category
-    -- Search Based On Brand
-    -- Search Based On Product Age
+    -x- Search Based On Category
+    -x- Search Based On Brand
+    -x- Search Based On Product Age
 
 -- Security
-    -- Auto Logout After Time Period
-    -- SQL Injection Protection
+    --- Auto Logout After Time Period
+    -x- SQL Injection Protection
 
 -- Validation
     -- Website Pass W3C HTML Validator

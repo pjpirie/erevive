@@ -1,7 +1,10 @@
 <?php
-    // function safeInput(){
-    //     // return htmlspecialchars()
-    // }
+    function safeInput($input){
+        return htmlspecialchars($input);
+    }
+    function safeOutput($inputs){
+        return strip_tags($input);
+    }
     
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
 class Database{
@@ -37,9 +40,13 @@ class Database{
      * @param data array -  the data to be bound to the query using prepared staments
      * @return array - all of the affected rows as an array
      */
-    public function select($query, $data = []){
-        $this->stmt = $this->conn->prepare($query);
+    public function select($query, $data = [], $debug = false){
+        $this->stmt = $this->conn->prepare(safeInput($query));
         $this->stmt->execute($data);
+        // if($debug){
+        //     var_dump($this->stmt->fetchAll(PDO::FETCH_ASSOC));
+        //     exit;
+        // }
         return $this->stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     /**
@@ -50,7 +57,7 @@ class Database{
      * @return int - number of rows
      */
     public function count($query, $data = []){
-        $this->stmt = $this->conn->prepare($query);
+        $this->stmt = $this->conn->prepare(safeInput($query));
         $this->stmt->execute($data);
         return count($this->stmt->fetchAll(PDO::FETCH_ASSOC));
     }
@@ -62,7 +69,7 @@ class Database{
      * @return null
      */
     public function insert($query, $data = []){
-        $this->stmt = $this->conn->prepare($query);
+        $this->stmt = $this->conn->prepare(safeInput($query));
         $this->stmt->execute($data);
     }
 };

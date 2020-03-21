@@ -1,39 +1,33 @@
 <?php
+require_once("../inc/session.php");
+require_once("../inc/dbx.php");
+require_once("../function.php");
+if($_SERVER["REQUEST_METHOD"] == "POST"){
 
-require_once("../includes/session.php");
-require_once("../includes/database.php");
-require_once("../includes/functions.php");
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    var_dump($_POST);
-//    exit();
-//    $id = $_POST['id'];
-    $action = $_POST['submit'];
-    $name = $_POST['name'];
-    $start_date = $_POST['start-date'];
-    $end_date = $_POST['end-date'];
-    $location = $_POST['location'];
-    $type = $_POST['type'];
-    $skill = $_POST['skill'];
-//    echo "{$id} {$action} {$name} {$start_date} {$end_date} {$location} {$type}";
-//    exit();
-    if ($action !== "Delete") {
-        if($type == "materials"){
-            $conn->insert("INSERT INTO materials (name) VALUES (?) ",[$name]);
-            $mat_id = $conn->select("SELECT id FROM materials WHERE name = ?",[$name])[0];
-//            die($mat_id->id. " " .$skill);
-            $conn->insert("INSERT INTO skill_materials (material_id, skill_id) VALUES (?,?) ",[$mat_id->id,$skill]);
-        }else{
-//            die("dead");
-            $conn->insert("INSERT INTO {$type} (name, date, end_date, location) VALUES (?,?,?,?)",
-                [$name, $start_date, $end_date, $location]);
-        }
-        redirect("index", [
-            'success' => 'recordcreated'
+    $id = safeInput($_POST['id']);
+    $name = safeInput($_POST['prod-name']);
+    $desc = safeInput($_POST['prod-desc']);
+    $price = safeInput($_POST['prod-price']);
+    $brand = safeInput($_POST['prod-brand']);
+    $category = safeInput($_POST['prod-cat']);
+    $imgURL = safeInput($_POST['imageURL']);
+    // var_dump($id);
+    // var_dump(getRecord($dbx, 'products', $id));
+    // exit;
+    if(isAuth()){
+        $dbx->insert("INSERT INTO `products` (`name`, `user_id`, `description`, `price`, `category_id`, `date_added`, `image_url`, `brand`) VALUES (?, ?, ?, ?, ?, current_timestamp(), ?, ?) ",
+        [$name, $id, $desc, $price, intval($category) ,$imgURL, $brand]);
+        // var_dump([$name, $id, $desc, $price, intval($category) ,$imgURL, $brand]);
+        // exit; 
+        redirect("market", [
+            'success' => 'recordadded'
         ]);
     }
+
     redirect("index");
-} else {
-    redirect("login", [
+}else{
+    redirect("market", [
         'error' => 'noform'
     ]);
-};
+}
+;

@@ -5,3 +5,8 @@ if(currentPageIs('admin') && (!isAuth() || !isAdmin())){
         'error' => 'noperm'
     ]);
 }
+if(currentPageIs('signup') && (isAuth())){
+    redirect("index", [
+        'error' => 'signedin'
+    ]);
+}

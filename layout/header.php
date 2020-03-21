@@ -27,21 +27,29 @@ require_once("app/inc/init.php");
                     <li class="nav-item">
                         <a class="nav-link" href="<?= getURL('market') ?>">Market</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?= getURL('market') ?>">Pricing</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?= getURL('market') ?>">Disabled</a>
-                    </li>
                 </ul>
-                <form class="form-inline ml-md-auto ml-lg-auto mr-sm-auto mr-md-3 mr-lg-3">
-                    <input class="form-control" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                <form method="get" action="<?=getURL('market')?>" class="form-inline ml-md-auto ml-lg-auto mr-sm-auto mr-md-3 mr-lg-3">
+                    <input class="form-control" name="search-bar" id="search-bar" type="search" placeholder="Search" aria-label="Search">
+                    <div class="form-group">
+                        <select class="form-control" id="search-filter" name="search-filter">
+                        <option value="name">Product Name</option>
+                        <option value="category_id">Category</option>
+                        <option value="brand">Brand</option>
+                        <option value="date_added">Upload Date</option>
+                        </select>
+                    </div>
+                    <input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Search">
                 </form>
+                <?php if(isset($_GET['error'])): ?>
+                    <script>
+                        errorHandling(<?=$_GET['error']?>);
+                    </script>
+                <?php endif;?>
                 <?php if(isset($_SESSION['user'])): ?>
                     <?php if(isset($_SESSION['user']['admin']) && $_SESSION['user']['admin'] == true): ?>
                         <a href="<?= getURL('admin')?>"><button class="btn ml-2 text-white bg-primary" type="submit">Admin Area</button></a>
                     <?php endif;?>
+                    <a href="<?= getURL('create') ?>"><button class="btn ml-2 bg-warning" type="submit">Add Item</button></a>
                     <a href="<?= getURL('profile') ?>"><button class="btn ml-2 border-dark" type="submit"><?= $_SESSION['user']['name']?></button></a>
                     <a href="<?= getRequestURL('logout') ?>"><button class="btn mr-2 ml-2 text-white bg-danger" type="submit">Logout</button></a>
                 <?php else:?>

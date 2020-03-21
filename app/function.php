@@ -32,8 +32,15 @@ function getUserID($user = []){
         // return $dbx->select("SELECT id FROM user where ")
     // }
 }
-function getUsername(){
-    return $_SESSION['user']['name'];
+function getUsername($dbx = null, $user_id = null){
+    if($user_id != null){
+        $user = $dbx->select("SELECT first_name, last_name from user WHERE id = ?",[$user_id])[0];
+        $user = getRecord($dbx, 'user', $user_id);
+        // debug($user);
+        return "{$user['first_name']} {$user['last_name']}";
+    }else{
+        return $_SESSION['user']['name'];
+    }
 }
 /**
  * returns an absolute path to the root directory of the project
@@ -156,14 +163,28 @@ function getAge($dbx ,$date){
         return intval($units[2]) . "s";
     }
 }
-function getProducts($dbx, $user_id = null){
-    if($user_id != null){
-        $prods = $dbx->select("SELECT * FROM products INNER JOIN category on products.category_id = category.id WHERE user_id = ?",[$user_id]);
-    }else{
-        $prods = $dbx->select("SELECT * FROM products INNER JOIN category on products.category_id = category.id");
+function getRecord($dbx, $table, $id){
+    return $dbx->select("SELECT * FROM {$table} WHERE id = ?",[$id])[0];
+}
+function getProducts($dbx, $user_id = null, $prods = null){
+    // var_dump($prods);
+    if($prods == null){
+        // echo('BREAK 1');
+        // exit;
+        if($user_id != null){
+            $prods = $dbx->select("SELECT products.*, category.category_name FROM products INNER JOIN category on products.category_id = category.id WHERE user_id = ?",[$user_id]);
+            // echo('BREAK 2');
+            // exit;
+        }else{
+            $prods = $dbx->select("SELECT products.*, category.category_name FROM products INNER JOIN category on products.category_id = category.id");
+            // echo('BREAK 3');
+            // exit;
+        }
     }
-    if(empty($prods)){
-        ?>
+        if(empty($prods)){
+            // echo('BREAK 4');
+            // exit;
+            ?>
             <div class="card market__item--none">
                 <h1>No Products... D:</h1>
             </div>
@@ -174,6 +195,7 @@ function getProducts($dbx, $user_id = null){
             <div class="card market__item">
                 <img src="
                 <?php  
+                // var_dump($prod);
                 if($prod['image_url'] != ""){
                     echo($prod['image_url']);
                 }else{
@@ -182,10 +204,18 @@ function getProducts($dbx, $user_id = null){
                 ?>" class="card-img-top img-fit" style="padding: 2rem;"alt="...">
                 <div class="card-body" style="border: 1px solid #ccc">
                     <h5 class="card-title"><?= $prod['name']?></h5>
-                    <p class="card-text"><?= $prod['category_name']?></p>
-                    <p class="card-text"><?= $prod['description']?></p>
+                    <p class="card-text">Category : <?= $prod['category_name']?></p>
+                    <p class="card-text">Description : <?= substr($prod['description'], 0, 255)?>...</p>
+                    <p class="card-text">Brand : <?= $prod['brand']?></p>
+                    <p class="card-text">Price : £<?= $prod['price']?></p>
                     <p class="card-text"><?= getAge($dbx,$prod['date_added']) ?></p>
-                    <a href="<?= getURL('market', ['user' => $prod['user_id']]) ?>" class="btn btn-primary">View Items</a>
+                    <a href="<?= getURL('profile', ['user' => $prod['user_id']]) ?>" class="btn btn-primary">View User</a>
+                    <?php if($_SESSION['user']['id'] == $prod['user_id']): ?>
+                    <a href="<?= getURL('edit', ['item' => $prod['id']]) ?>" class="btn btn-primary">Edit Item</a>
+                    <?php endif; ?>
+                    <?php if($_SESSION['user']['admin']): ?>
+                    <a href="<?= getURL('edit', ['item' => $prod['id']]) ?>" class="btn btn-warning">Admin Edit</a>
+                    <?php endif; ?>
                 </div>
             </div>
             <?php
